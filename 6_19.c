@@ -384,8 +384,8 @@ void turn(unsigned char dir)
   case 'L':
     // Turn left.
     OrangutanMotors::setSpeeds(-80, 80);
-    delay(80);
-    while(sensors[1] < 200){
+    delay(150);
+    while(sensors[2] < 600){
       robot.readLine(sensors, IR_EMITTERS_ON);
       OrangutanMotors::setSpeeds(-30, 30);
       delay(10);
@@ -394,8 +394,8 @@ void turn(unsigned char dir)
   case 'R':
     // Turn right.
     OrangutanMotors::setSpeeds(80, -80);
-    delay(80);
-    while(sensors[3] < 200){
+    delay(150);
+    while(sensors[2] < 600){
       robot.readLine(sensors, IR_EMITTERS_ON);
       OrangutanMotors::setSpeeds(30, -30);
       delay(10);
@@ -495,6 +495,8 @@ void loop()
 
   // Now enter an infinite loop - we can re-run the maze as many
   // times as we want to.
+  // simplify_path();
+  // display_path();
   while (1)
   {
     // Beep to show that we solved the maze.
@@ -525,7 +527,7 @@ void loop()
     int i;
     for (i = 0; i < path_length; i++)
     {
-      follow_segment(50);
+      follow_segment(40);
 
       // Drive straight while slowing down, as before.
       OrangutanMotors::setSpeeds(50, 50);
@@ -539,7 +541,7 @@ void loop()
     }
 
     // Follow the last segment up to the finish.
-    follow_segment(50);
+    follow_segment(40);
 
     // Now we should be at the finish!  Restart the loop.
   }
