@@ -422,7 +422,7 @@ void loop()
 {
   while (1)
   {
-    follow_segment(40);
+    follow_segment(60);
 
     // Drive straight a bit.  This helps us in case we entered the
     // intersection at an angle.
@@ -544,3 +544,4 @@ void loop()
     // Now we should be at the finish!  Restart the loop.
   }
 }
+
