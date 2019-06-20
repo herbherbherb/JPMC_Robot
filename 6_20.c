@@ -10,12 +10,13 @@
  * http://www.pololu.com/docs/0J21
  * http://www.pololu.com
  * http://forum.pololu.com
- *
+ * https://github.com/pololu/libpololu-avr/blob/master/src/OrangutanTime/OrangutanTime.cpp
+ * https://www.pololu.com/docs/0J18/17
  */
 
 // The following libraries will be needed by this demo
 #include <Pololu3pi.h>
-#include "./OrangutanTime/OrangutanTime.h"
+// #include "./OrangutanTime/OrangutanTime.h"
 #include <PololuQTRSensors.h>
 #include <OrangutanMotors.h>
 #include <OrangutanAnalog.h>
@@ -311,7 +312,7 @@ unsigned char select_turn(unsigned char found_left, unsigned char found_straight
   // turn as far to the left as possible.
   if (found_left)
     return 'L';
-  else if (found_straight)
+  else if (found_straight && !found_right)
     return 'S';
   else if (found_right)
     return 'R';
@@ -383,22 +384,48 @@ void turn(unsigned char dir)
   {
   case 'L':
     // Turn left.
-    OrangutanMotors::setSpeeds(-80, 80);
-    delay(150);
+    // OrangutanMotors::setSpeeds(-80, 80);
+    // delay(150);
+    // while(sensors[2] < 600){
+    //   robot.readLine(sensors, IR_EMITTERS_ON);
+    //   OrangutanMotors::setSpeeds(-30, 30);
+    //   delay(10);
+    // }
+    // break;
+    
+    while(sensors[2] > 600){
+      OrangutanMotors::setSpeeds(-30, 30);
+      delay(10);
+      robot.readLine(sensors, IR_EMITTERS_ON);
+    }
     while(sensors[2] < 600){
       robot.readLine(sensors, IR_EMITTERS_ON);
       OrangutanMotors::setSpeeds(-30, 30);
       delay(10);
+      robot.readLine(sensors, IR_EMITTERS_ON);
     }
     break;
   case 'R':
     // Turn right.
-    OrangutanMotors::setSpeeds(80, -80);
-    delay(150);
+    // OrangutanMotors::setSpeeds(80, -80);
+    // delay(150);
+    // while(sensors[2] < 600){
+    //   robot.readLine(sensors, IR_EMITTERS_ON);
+    //   OrangutanMotors::setSpeeds(30, -30);
+    //   delay(10);
+    // }
+    // break;
+
+    while(sensors[2] > 600){
+      OrangutanMotors::setSpeeds(30, -30);
+      delay(10);
+      robot.readLine(sensors, IR_EMITTERS_ON);
+    }
     while(sensors[2] < 600){
       robot.readLine(sensors, IR_EMITTERS_ON);
       OrangutanMotors::setSpeeds(30, -30);
       delay(10);
+      robot.readLine(sensors, IR_EMITTERS_ON);
     }
     break;
   case 'B':
@@ -464,7 +491,8 @@ void loop()
     // Check for the ending spot.
     // If all three middle sensors are on dark black, we have
     // solved the maze.
-    if (sensors[1] > 600 && sensors[2] > 600 && sensors[3] > 600){
+    // All five baby
+    if (sensors[0] > 600 && sensors[1] > 600 && sensors[2] > 600 && sensors[3] > 600 && sensors[4] > 600){
         break;
     }
 
