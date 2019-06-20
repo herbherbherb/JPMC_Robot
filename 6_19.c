@@ -22,7 +22,6 @@
 #include <OrangutanLCD.h>
 #include <OrangutanPushbuttons.h>
 #include <OrangutanBuzzer.h>
-
 Pololu3pi robot;
 unsigned int sensors[5]; // an array to hold sensor values
 
